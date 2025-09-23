@@ -1,0 +1,32 @@
+{
+  "name": "Practicum Use Case - HR IT Provisioning",
+  "schema": [
+    {
+      "control_type": "text",
+      "label": "Department",
+      "name": "department",
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Employee's Name",
+      "name": "employee_name",
+      "type": "string"
+    },
+    {
+      "name": "Items",
+      "type": "array",
+      "of": "object",
+      "label": "Items",
+      "properties": [
+        {
+          "control_type": "text",
+          "label": "Name",
+          "name": "Name",
+          "type": "string"
+        }
+      ]
+    }
+  ],
+  "content": "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" \"http://www.w3.org/TR/REC-html40/loose.dtd\">\n<html>\n\t<body style=\"line-height: normal; font-style: normal; font-variant: normal; font-size: normal; font-weight: normal; max-width: 600px; font-family: Arial, serif;\">\n\t\t<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" id=\"backgroundTable\">\n\t\t\t\t\t<p>\n\t\t\t\t<img src=\"https://scontent-sjc3-1.xx.fbcdn.net/v/t39.30808-1/301359727_619941849836958_6501924104407306004_n.jpg?stp=cp0_dst-jpg_e15_p200x200_q65&_nc_cat=101&ccb=1-7&_nc_sid=dbb9e7&_nc_ohc=F3kqVtFts6EAX-mlD8x&_nc_ht=scontent-sjc3-1.xx&oh=00_AfDQawT3vE2aRhvhFAYkEcSLPsmdDwc86Z4ToRoEl38E5w&oe=64C41A2D\" style=\"max-width: 300px;\">\n\t\t\t</p>\n        \n          <p>\n\t\t\t\t<b>Welcome to your Provisioning Hub:</b>\n\t\t\t</p>\n\n\t\t\t<p>\n\t\t\t\t<br>This is the first step to getting you set up!\n\t\t\t\t<br>\n\t\t\t\t<br>Employee Details: \n\t\t\t</p>\n<ul>\n\t\t\t\t<li>\n<b>Department:</b> {{department}}</li>\n\t\t\t\t<li>\n<b>Employee's Name:</b> {{employee_name}}</li>\n\t\t\t</ul>\n\t\t\t\n\t\t\t<p>\n\t\t\t\t<span style=\"color: red;\">For your New Employee:</span>\n\t\t\t\t<br>\n\t\t\t\tHere are the next steps to getting you set up, you will need to go through the training materials/resources to get started with the ACME IT Tools and Services.\n\t\t\t</p>\n\t\t\t<br>\n\t\t\t<!--BEGIN TABLE-->\n\t\t\t\t<table style=\"margin-left: auto; margin-right: auto; border: black;\" border=\"1\" cellpadding=\"10px\">\n\t\t\t\t\t<tbody>\n\t\t\t\t\t<!--BEGIN ROW 1-->\n\t\t\t\t\t<tr>\n\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t<!-- REPLACE w/ IMAGE BELOW-->\n\t\t\t\t\t\t\t<img src=\"https://i.pinimg.com/originals/61/fb/89/61fb895ba49a927a2588f1321783089a.png\" style=\"max-width: 40px;\">\n\t\t\t\t\t\t\t<!-- REPLACE w/ IMAGE ABOVE-->\n\t\t\t\t\t\t</td>\n\t\t\t\t\t\t<td style=\"max-width: 300px;\">\n<b>Log in to Okta:</b>\n\t\t\t\t\t\t\t<ul>\n\t\t\t\t\t\t\t\t<li>Okta is our Single-Sign On (SSO) system which give you access to the appropriate products and services.</li>\n\t\t\t\t\t\t\t\t<li><b>Please use the Okta credentials above to log in.</b></li>\n\t\t\t\t\t\t\t\t<li>Contact your manager if you have questions on using this initial login.</li>\n\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t</td>\n\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t<img src=\"https://e7.pngegg.com/pngimages/846/361/png-clipart-okta-developer-logo-tech-companies-thumbnail.png\">\n\t\t\t\t\t\t</td>\n\t\t\t\t\t</tr>\n\t\t\t\t\t<!--END ROW 1-->\n\t\t\t\t\t<!--BEGIN ROW 2-->\n\t\t\t\t\t<tr>\n\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t<!-- REPLACE w/ IMAGE BELOW-->\n\t\t\t\t\t\t\t<img src=\"http://modalpoint.com/wp-content/uploads/2015/08/Two-Mistakes.png\" style=\"max-width: 40px;\">\n\t\t\t\t\t\t\t<!-- REPLACE w/ IMAGE ABOVE-->\n\t\t\t\t\t\t</td>\n\t\t\t\t\t\t<td style=\"max-width: 300px;\">\n\t\t\t\t\t\t\tPrerequisite:  Log in to Okta.\n\t\t\t\t\t\t\t<br><br>\n\t\t\t\t\t\t\tGo through the Cyber Security Course. This presentation provides:\n\t\t\t\t\t\t\t<ul>\n\t\t\t\t\t\t\t\t<li>An Overview of our IT Tools &amp; Services</li>\n\t\t\t\t\t\t\t\t<li>A guide on how to get started</li>\n\t\t\t\t\t\t\t\t<li>Actions you must take</li>\n\t\t\t\t\t\t\t\t<li>Supporting videos and links to more information.</li>\n\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t</td>\n\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t<!--REPLACE IMAGE BELOW-->\n\t\t\t\t\t\t\t<img src=\"https://i.ytimg.com/vi/WKCQz40V0yA/mqdefault.jpg\">\n\t\t\t\t\t\t\t<!--REPLACE IMAGE ABOVE-->\n\t\t\t\t\t\t</td>\n\t\t\t\t\t</tr>\n\t\t\t\t\t<!--END ROW 2-->\n\t\t\t\t\t\n\t\t\t\t</tbody>\n\t\t\t\t</table>\n\t\t\t<!--END TABLE-->\n\t\t\t<br>\n            <hr>\n          Here are the requested items for you :\n\t\t\t\t<table style=\"border: black; max-width:80%;\" border=\"1\" cellpadding=\"10px\">\n\t\t\t\t\t<tr><th style=\"width:30%\"><b>Equipment</b></th><th style=\"width:10%\"><b>Quantity</b></th></tr>\n\n\t\t\t\t\t{{#Items}}\n                  <tr><td>{{Name}}</td><td style=\"text-align: center; vertical-align: middle;\">1</td></tr>\n\t\t\t\t\t{{/Items}}\n\t\t\t\t</table><br><br>\n\n                <br>\n\n\t\t</table>\n\t</body>\n\t</html>"
+}

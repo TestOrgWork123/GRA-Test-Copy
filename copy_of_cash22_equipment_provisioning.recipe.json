@@ -1,0 +1,728 @@
+{
+  "name": "Copy of Cash22 Equipment Provisioning",
+  "version": 2,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "rest",
+    "name": "new_poll_event",
+    "as": "b61bdead",
+    "keyword": "trigger",
+    "toggleCfg": {
+      "___poll_interval": true
+    },
+    "input": {
+      "output_type": "json",
+      "object_name": "New Employees",
+      "url": "https://apim.workato.com/trainingagtm/custom-hr-app-v1/practicum-use-case-hr-app-simulator",
+      "___poll_interval": "5",
+      "sample_output": "{\n\t\t\"employees\": [\n\t\t\t{\n\t\t\t\t\"first_name\": \"dwight\",\n\t\t\t\t\"last_name\": \"sHrute\",\n\t\t\t\t\"department\": \"Finance\",\n\t\t\t\t\"email\": \"dwight.shrute@cash22.com\",\n\t\t\t\t\"id\": \"3\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"first_name\": \"jim\",\n\t\t\t\t\"last_name\": \"halperT\",\n\t\t\t\t\"department\": \"Sales\",\n\t\t\t\t\"email\": \"jim.halpert@cash22.com\",\n\t\t\t\t\"id\": \"2\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"first_name\": \"michael\",\n\t\t\t\t\"last_name\": \"Scott\",\n\t\t\t\t\"department\": \"\",\n\t\t\t\t\"email\": \"michael.scott@cash22.com\",\n\t\t\t\t\"id\": \"1\"\n\t\t\t}\n\t\t]\n\t}",
+      "array_path": "employees",
+      "key1": "id"
+    },
+    "extended_output_schema": [
+      {
+        "label": "Response",
+        "name": "response",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "First name",
+            "type": "string",
+            "name": "first_name"
+          },
+          {
+            "control_type": "text",
+            "label": "Last name",
+            "type": "string",
+            "name": "last_name"
+          },
+          {
+            "control_type": "text",
+            "label": "Department",
+            "type": "string",
+            "name": "department"
+          },
+          {
+            "control_type": "text",
+            "label": "Email",
+            "type": "string",
+            "name": "email"
+          },
+          {
+            "control_type": "text",
+            "label": "ID",
+            "type": "string",
+            "name": "id"
+          }
+        ],
+        "type": "object"
+      }
+    ],
+    "extended_input_schema": [
+      {
+        "control_type": "select",
+        "extends_schema": true,
+        "hint": "Select the array that contains your records' unique identifier and/or last_modified_at timestamps. Then, identify the specific variables which correspond to that identifier or timestamp.",
+        "label": "Array path",
+        "name": "array_path",
+        "pick_list": [
+          [
+            "employees",
+            "employees"
+          ]
+        ],
+        "type": "string"
+      },
+      {
+        "control_type": "select",
+        "default": "id",
+        "hint": "Select a variable that is your records' unique identifier. Required both for processing <b>new</b> or <b>new/updated</b> events. The recipe will use this ID to carry out deduplication by ensuring it processes each unique record only once.",
+        "label": "ID column",
+        "name": "key1",
+        "pick_list": [
+          [
+            "first_name",
+            "first_name"
+          ],
+          [
+            "last_name",
+            "last_name"
+          ],
+          [
+            "department",
+            "department"
+          ],
+          [
+            "email",
+            "email"
+          ],
+          [
+            "id",
+            "id"
+          ]
+        ],
+        "type": "string"
+      },
+      {
+        "control_type": "select",
+        "hint": "Select a variable that is your records' last_modified_at timestamp. Required if processing <b>new/updated</b> events. The recipe will use the ID together with the timestamp to carry out deduplication by ensuring it processes each unique record only if it has gotten modified again.",
+        "label": "Timestamp column",
+        "name": "key2",
+        "optional": true,
+        "pick_list": [
+          [
+            "first_name",
+            "first_name"
+          ],
+          [
+            "last_name",
+            "last_name"
+          ],
+          [
+            "department",
+            "department"
+          ],
+          [
+            "email",
+            "email"
+          ],
+          [
+            "id",
+            "id"
+          ]
+        ],
+        "sticky": true,
+        "type": "string"
+      }
+    ],
+    "visible_config_fields": [
+      "object_name",
+      "url",
+      "headers",
+      "output_type",
+      "sample_output",
+      "___poll_interval"
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "if",
+        "input": {
+          "type": "compound",
+          "operand": "or",
+          "conditions": [
+            {
+              "operand": "blank",
+              "lhs": "#{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"first_name\"]}')}",
+              "rhs": "",
+              "uuid": "e3b7305e-35c5-4fe9-bf95-36e0ba126cba"
+            },
+            {
+              "operand": "blank",
+              "lhs": "#{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"last_name\"]}')}",
+              "rhs": "",
+              "uuid": "fd6f8440-be12-451d-ae46-417f0f654760"
+            },
+            {
+              "operand": "blank",
+              "lhs": "#{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"email\"]}')}",
+              "rhs": "",
+              "uuid": "3b94d9a5-19c4-42a1-9bec-1c3b4d717966"
+            },
+            {
+              "operand": "blank",
+              "lhs": "#{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"department\"]}')}",
+              "rhs": "",
+              "uuid": "847eddde-a85c-41bf-a6b9-a5c4befcb11e"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 2,
+            "provider": "email",
+            "name": "send_mail",
+            "as": "216468d4",
+            "keyword": "action",
+            "input": {
+              "email_type": "plain_text",
+              "to": "josephheller@cash22.com, Jordan.Bernard@hcss.com",
+              "subject": "Onboarding Process Discontinued for Employee",
+              "body": "This email is being sent to inform you that the onboarding automation process is being discontinued for Employee with ID #{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"id\"]}')} as they are missing key information in \"HR Software\".\n\nRaw Data - \n\nID: #{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"id\"]}')}\nEmail: #{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"email\"]}')}\nDepartment: #{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"department\"]}')}\nFirst Name: #{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"first_name\"]}')}\nLast Name: #{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"last_name\"]}')}"
+            },
+            "comment": "If there are any empty values, email HR Team.",
+            "uuid": "31a35688-a948-48cc-a1da-61251b7f674f",
+            "skip": false
+          },
+          {
+            "number": 3,
+            "as": "bc7b8a15",
+            "keyword": "stop",
+            "input": {
+              "stop_with_error": "false"
+            },
+            "comment": "Terminate job.",
+            "uuid": "9ad789c1-efde-4143-87c7-3df56dd322f7"
+          }
+        ],
+        "comment": "Check that there are no empty fields from HR Software.\nThis also ensures no empty data in the ZendDesk ticket.\n\nFor greater simplicity, this check could also include the department validation in addition to validating empty fields.",
+        "uuid": "fddaee41-5760-4479-b5f9-4c7a75134a2f"
+      },
+      {
+        "number": 4,
+        "provider": "lookup_table",
+        "name": "search_entries",
+        "as": "a8647ecd",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "lookup_table_id": "Employee Items Based on Role"
+        },
+        "input": {
+          "lookup_table_id": {
+            "zip_name": "employee_items_based_on_role.lookup_table.json",
+            "name": "Employee Items Based on Role",
+            "folder": ""
+          },
+          "parameters": {
+            "col1": "#{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"department\"]}')}"
+          }
+        },
+        "extended_output_schema": [
+          {
+            "label": "Entries",
+            "name": "entries",
+            "of": "object",
+            "properties": [
+              {
+                "control_type": "number",
+                "label": "Entry ID",
+                "parse_output": "integer_conversion",
+                "type": "integer",
+                "name": "id"
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Role",
+                    "name": "col1",
+                    "type": "string",
+                    "sticky": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Items",
+                    "name": "col2",
+                    "type": "string",
+                    "sticky": true
+                  }
+                ],
+                "label": "Entry",
+                "type": "object",
+                "name": "entry"
+              }
+            ],
+            "type": "array"
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "hint": "Provide one or more entry fields to search the entry",
+            "label": "Search by",
+            "name": "parameters",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Role",
+                "name": "col1",
+                "type": "string",
+                "sticky": true,
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "Items",
+                "name": "col2",
+                "type": "string",
+                "sticky": true,
+                "optional": true
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "comment": "Search the LookUp table for the Employee's department (Step 1).",
+        "uuid": "71da4a88-8746-4878-8258-dfce0dbad48d"
+      },
+      {
+        "number": 5,
+        "keyword": "if",
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "equals_to",
+              "lhs": "#{_dp('{\"pill_type\":\"output\",\"provider\":\"lookup_table\",\"line\":\"a8647ecd\",\"path\":[\"entries\",{\"path_element_type\":\"size\"}]}')}",
+              "rhs": "0",
+              "uuid": "2009e2b6-82d5-47c8-89bf-d62d533a1987"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 6,
+            "provider": "email",
+            "name": "send_mail",
+            "as": "636950fe",
+            "keyword": "action",
+            "input": {
+              "email_type": "plain_text",
+              "to": "josephheller@cash22.com, Jordan.Bernard@hcss.com",
+              "subject": "Onboarding Process Discontinued for #{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"first_name\"]}')} #{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"last_name\"]}')}",
+              "body": "This email is being sent to inform you that the onboarding automation process is being discontinued for #{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"first_name\"]}')} #{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"last_name\"]}')} as their department is either missing or invlaid.\n\nRaw Data - \n\nID: #{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"id\"]}')}\nEmail: #{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"email\"]}')}\nDepartment: #{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"department\"]}')}\nFirst Name: #{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"first_name\"]}')}\nLast Name: #{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"last_name\"]}')}"
+            },
+            "comment": "Upon error, send email to HR Team.",
+            "uuid": "d20fbd47-c455-4aa0-9ad0-b2cf3d219ddc",
+            "skip": false
+          },
+          {
+            "number": 7,
+            "as": "d6bd0e5c",
+            "keyword": "stop",
+            "input": {
+              "stop_with_error": "false"
+            },
+            "comment": "Terminate job.",
+            "uuid": "89a8dbe5-b0dc-4c68-889f-2d3ea1f92062"
+          }
+        ],
+        "comment": "If the Department is invalid, LookUp Table (Step 5) will return an error.",
+        "uuid": "90677f54-21a8-435f-85f9-e79d6b3bffaa"
+      },
+      {
+        "number": 8,
+        "provider": "workato_template",
+        "name": "create_document",
+        "as": "b4377869",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "template_id": "Practicum Use Case - HR IT Provisioning"
+        },
+        "input": {
+          "template_id": {
+            "zip_name": "practicum_use_case_hr_it_provisioning.workato_template.json",
+            "name": "Practicum Use Case - HR IT Provisioning",
+            "folder": ""
+          },
+          "template_input": {
+            "department": "#{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"department\"]}')}",
+            "employee_name": "#{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"first_name\"]}')} #{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"last_name\"]}')}",
+            "Items": {
+              "Name": "#{_dp('{\"pill_type\":\"output\",\"provider\":\"lookup_table\",\"line\":\"a8647ecd\",\"path\":[\"entries\",{\"path_element_type\":\"current_item\"},\"entry\",\"col2\"]}')}"
+            }
+          }
+        },
+        "extended_input_schema": [
+          {
+            "label": "Template input",
+            "name": "template_input",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Department",
+                "name": "department",
+                "type": "string"
+              },
+              {
+                "control_type": "text",
+                "label": "Employee's Name",
+                "name": "employee_name",
+                "type": "string"
+              },
+              {
+                "name": "Items",
+                "type": "array",
+                "of": "object",
+                "label": "Items",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Name",
+                    "name": "Name",
+                    "type": "string"
+                  }
+                ]
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "comment": "Use Workato Message Template to format the Zendesk ticket with the new employees information from step 1.",
+        "uuid": "dfb4fdca-70ce-436d-8007-d6802f9ce22a"
+      },
+      {
+        "number": 9,
+        "keyword": "try",
+        "input": {
+        },
+        "block": [
+          {
+            "number": 10,
+            "provider": "zendesk",
+            "name": "create_ticket",
+            "as": "4dc60fab",
+            "keyword": "action",
+            "toggleCfg": {
+              "type": true,
+              "priority": true,
+              "status": true
+            },
+            "input": {
+              "subject": "Equipment Provisioning Ticket for New Employee - #{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"first_name\"]}')} #{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"last_name\"]}')}",
+              "type": "task",
+              "priority": "normal",
+              "status": "new",
+              "comment": "#{_dp('{\"pill_type\":\"output\",\"provider\":\"workato_template\",\"line\":\"b4377869\",\"path\":[\"document\"]}')}",
+              "html_comment": {
+                "html_body": "#{_dp('{\"pill_type\":\"output\",\"provider\":\"workato_template\",\"line\":\"b4377869\",\"path\":[\"document\"]}')}"
+              }
+            },
+            "extended_output_schema": [
+              {
+                "label": "Ticket custom fields",
+                "name": "custom_fields",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Ticket status",
+                    "optional": true,
+                    "custom_field_id": 40595940393748,
+                    "custom": true,
+                    "hint": "Request ticket status",
+                    "type": "string",
+                    "name": "field_40595940393748"
+                  },
+                  {
+                    "control_type": "select",
+                    "label": "Approval status",
+                    "optional": true,
+                    "custom_field_id": 40595980635668,
+                    "custom": true,
+                    "hint": "Approval status",
+                    "pick_list": [
+                      [
+                        "Pending",
+                        "zd_es_approval_pending"
+                      ],
+                      [
+                        "Approved",
+                        "zd_es_approval_approved"
+                      ],
+                      [
+                        "Rejected",
+                        "zd_es_approval_rejected"
+                      ],
+                      [
+                        "Withdrawn",
+                        "zd_es_approval_withdrawn"
+                      ]
+                    ],
+                    "toggle_hint": "Select from list",
+                    "toggle_field": {
+                      "control_type": "text",
+                      "label": "Approval status",
+                      "toggle_hint": "Enter custom value",
+                      "optional": true,
+                      "custom_field_id": 40595980635668,
+                      "custom": true,
+                      "hint": "Enter the <b>tag value</b> of the option",
+                      "type": "string",
+                      "name": "field_standard::approval_workflow_status"
+                    },
+                    "type": "string",
+                    "name": "field_standard::approval_workflow_status"
+                  }
+                ],
+                "type": "object"
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "label": "HTML comment",
+                "name": "html_comment",
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Comment body",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "The comment string.",
+                    "type": "string",
+                    "name": "body"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Html body",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "The comment formatted as HTML.",
+                    "type": "string",
+                    "name": "html_body"
+                  },
+                  {
+                    "control_type": "checkbox",
+                    "label": "Public",
+                    "optional": true,
+                    "hint": "<b>True</b> if a public comment; <b>False</b> if an internal note.",
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Public",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "optional": true,
+                      "render_input": null,
+                      "parse_output": null,
+                      "hint": "<b>True</b> if a public comment; <b>False</b> if an internal note.",
+                      "type": "boolean",
+                      "name": "public"
+                    },
+                    "type": "boolean",
+                    "name": "public"
+                  },
+                  {
+                    "control_type": "number",
+                    "label": "Author ID",
+                    "parse_output": "integer_conversion",
+                    "optional": true,
+                    "type": "integer",
+                    "name": "author_id"
+                  },
+                  {
+                    "name": "uploads",
+                    "type": "array",
+                    "of": "object",
+                    "label": "Uploads",
+                    "optional": true,
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Upload token",
+                        "hint": "Token generated from the Upload attachment action.",
+                        "type": "string",
+                        "name": "token"
+                      }
+                    ]
+                  }
+                ],
+                "type": "object"
+              },
+              {
+                "control_type": "text",
+                "custom": true,
+                "hint": "Request ticket status",
+                "label": "Ticket status",
+                "name": "field_40595940393748",
+                "optional": true,
+                "type": "string",
+                "custom_field_id": 40595940393748
+              },
+              {
+                "control_type": "select",
+                "custom": true,
+                "hint": "Approval status",
+                "label": "Approval status",
+                "name": "field_standard::approval_workflow_status",
+                "optional": true,
+                "pick_list": [
+                  [
+                    "Pending",
+                    "zd_es_approval_pending"
+                  ],
+                  [
+                    "Approved",
+                    "zd_es_approval_approved"
+                  ],
+                  [
+                    "Rejected",
+                    "zd_es_approval_rejected"
+                  ],
+                  [
+                    "Withdrawn",
+                    "zd_es_approval_withdrawn"
+                  ]
+                ],
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Approval status",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "custom_field_id": 40595980635668,
+                  "custom": true,
+                  "hint": "Enter the <b>tag value</b> of the option",
+                  "type": "string",
+                  "name": "field_standard::approval_workflow_status"
+                },
+                "toggle_hint": "Select from list",
+                "type": "string",
+                "custom_field_id": 40595980635668
+              }
+            ],
+            "comment": "Create the ticket in Zendesk.",
+            "uuid": "8709a687-a599-4d18-8373-21521c96a128",
+            "skip": true
+          },
+          {
+            "number": 11,
+            "as": "68e74934",
+            "keyword": "catch",
+            "input": {
+              "max_retry_count": "0",
+              "retry_interval": "2"
+            },
+            "block": [
+              {
+                "number": 12,
+                "provider": "email",
+                "name": "send_mail",
+                "as": "746abefa",
+                "keyword": "action",
+                "input": {
+                  "email_type": "plain_text",
+                  "to": "josephheller@cash22.com, Jordan.Bernard@hcss.com",
+                  "subject": "Onboarding Process Failed for #{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"first_name\"]}')} #{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"last_name\"]}')}",
+                  "body": "This email is being sent to inform you that the onboarding automation for Zendesk has failed due to the following error message: #{_dp('{\"pill_type\":\"output\",\"provider\":\"catch\",\"line\":\"68e74934\",\"path\":[\"message\"]}')}\n\nCurrent Employee Data - \nID: #{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"id\"]}')}\nEmail: #{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"email\"]}')}\nDepartment: #{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"department\"]}')}\nFirst Name: #{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"first_name\"]}')}\nLast Name: #{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"last_name\"]}')}"
+                },
+                "comment": "Upon error, send email to HR Team OR IT.",
+                "uuid": "7f236644-2371-4f15-bb00-b4990e9b2ff2",
+                "skip": false
+              },
+              {
+                "number": 13,
+                "as": "1fcb6c0c",
+                "keyword": "stop",
+                "input": {
+                  "stop_with_error": "true",
+                  "stop_reason": "#{_dp('{\"pill_type\":\"output\",\"provider\":\"catch\",\"line\":\"68e74934\",\"path\":[\"message\"]}')}"
+                },
+                "uuid": "a9b44ce0-0bf8-440b-9b53-16ff65493de0"
+              }
+            ],
+            "uuid": "7d9f95ce-aa33-497f-991c-96f17ccb5a0c"
+          }
+        ],
+        "uuid": "359c5297-0feb-4618-8814-4cc65a2d3733"
+      }
+    ],
+    "comment": "Poll HR Software for New Employees.",
+    "job_report_schema": [
+      {
+        "name": "custom_column_0",
+        "label": "ID"
+      },
+      {
+        "name": "custom_column_1",
+        "label": "Name"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Department"
+      },
+      {
+        "name": "custom_column_3",
+        "label": "Email"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_0": "#{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"id\"]}')}",
+      "custom_column_1": "#{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"first_name\"]}')} #{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"last_name\"]}')}",
+      "custom_column_2": "#{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"department\"]}')}",
+      "custom_column_3": "#{_dp('{\"pill_type\":\"output\",\"provider\":\"rest\",\"line\":\"b61bdead\",\"path\":[\"response\",\"email\"]}')}"
+    },
+    "uuid": "33c0f575-688f-4ef6-bda6-73ac52261922",
+    "unfinished": false
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "rest",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "GRA Test Copy/Salim/Recipes/my_second_http_account.connection.json",
+        "name": "My second HTTP account",
+        "folder": "GRA Test Copy/Salim/Recipes"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "lookup_table",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "email",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "zendesk",
+      "skip_validation": true,
+      "account_id": {
+        "zip_name": "GRA Test Copy/Connections/jordanbernard_test_account.connection.json",
+        "name": "JordanBernard Test Account",
+        "folder": "GRA Test Copy/Connections"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_template",
+      "skip_validation": false,
+      "account_id": null
+    }
+  ]
+}
