@@ -14,10 +14,10 @@
       "type": "string"
     },
     {
+      "label": "Items",
       "name": "Items",
       "type": "array",
       "of": "object",
-      "label": "Items",
       "properties": [
         {
           "control_type": "text",
